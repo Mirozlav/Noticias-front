@@ -1,0 +1,65 @@
+<div class="row">
+  <h1>NOTICIAS DESTACADAS</h1>
+</div>
+<div class="row">
+  <div class="input-group flex-nowrap">
+    <span class="input-group-text" id="addon-wrapping"> <mat-icon aria-hidden="false"
+        fontIcon="search"></mat-icon></span>
+    <input type="text" class="form-control" placeholder="Buscar" aria-label="buscar" aria-describedby="addon-wrapping"
+      #txtBuscar (keyup.enter)="buscarfavoritos(txtBuscar.value)">
+  </div>
+</div>
+<br>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col" class="text-center"></th>
+      <th scope="col">TÍTULO
+        <span *ngIf="asc"> <mat-icon aria-hidden="false" fontIcon="arrow_drop_down" (click)="ordenarNoticia()"
+            style="cursor:pointer;"></mat-icon></span>
+        <span *ngIf="!asc"> <mat-icon aria-hidden="false" fontIcon="arrow_drop_up" (click)="ordenarNoticia()"
+            style="cursor:pointer;"></mat-icon></span>
+      </th>
+      <th scope="col">DESCRIPCIÓN</th>
+      <th scope="col">RESUMEN</th>
+      <th scope="col">FECHA DE PUBLICACIÓN
+      </th>
+      <th scope="col" class="text-center"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let noticia of listarFavorito">
+      <td class="align-middle text-center">
+        <span><mat-icon [ngStyle]="{'color':'#D4AC0D'}" fontIcon="grade"></mat-icon></span>
+      </td>
+      <td>{{noticia.title}}</td>
+      <td>{{noticia.summary}}</td>
+      <td><a href='{{noticia.url}}'>{{noticia.news_site}}</a></td>
+      <td>{{this.funciones.formatDate(noticia.published_at)}}</td>
+      <td class="align-middle text-center">
+        <span> <mat-icon [ngStyle]="{'color':'#D4AC0D'}" aria-hidden="true" fontIcon="edit" style="cursor:pointer;"
+            (click)="openModalEditar(noticia)"></mat-icon></span>
+      </td>
+      <td class="align-middle text-center">
+        <span> <mat-icon [ngStyle]="{'color':'#ec5f4d'}" aria-hidden="true" fontIcon="delete" style="cursor:pointer;"
+            (click)="eliminarFavorito(noticia.id)"></mat-icon></span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="row">
+  <nav aria-label="...">
+    <ul class="pagination ">
+      <li class="page-item" (click)="paginaAnterior()">
+        <a class="page-link"> <span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li [ngClass]="{'active' : i===(pagina)}" class="page-item" *ngFor="let item of paginas; let i = index"
+        (click)="paginaSeleccionada(i)">
+        <a class="page-link">{{i+1}}</a>
+      </li>
+      <li class="page-item" (click)="paginaSiguiente()">
+        <a class="page-link"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+    </ul>
+  </nav>
+</div>

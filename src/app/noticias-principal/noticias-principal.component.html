@@ -1,0 +1,10 @@
+
+<div class="list-group">
+    <a class="list-group-item list-group-item-action" [ngClass]="{'active' : opcionActiva == 'op1'}" (click)="setActive('op1')" [title]="' Noticias'" [routerLink]="['/noticias']" >
+        Noticias
+    </a>
+    <a  class="list-group-item list-group-item-action" [ngClass]="{'active' : opcionActiva == 'op2'}" (click)="setActive('op2')" [title]="' Favoritos'" [routerLink]="['/favoritos']">
+        Favoritos
+    </a>
+</div>
+

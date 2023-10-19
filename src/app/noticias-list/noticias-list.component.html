@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="input-group flex-nowrap">
+    <span class="input-group-text" id="addon-wrapping"> <mat-icon aria-hidden="false"
+        fontIcon="search"></mat-icon></span>
+    <input type="text" class="form-control" placeholder="Buscar" aria-label="buscar" aria-describedby="addon-wrapping"
+      #txtBuscar (keyup.enter)="buscarNoticia(txtBuscar.value)">
+  </div>
+</div>
+<br>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col" class="text-center"></th>
+      <th scope="col">TÍTULO</th>
+      <th scope="col">DESCRIPCIÓN</th>
+      <th scope="col">RESUMEN</th>
+      <th scope="col">FECHA DE PUBLICACIÓN</th>
+      <th scope="col" class="text-center">
+        <span *ngIf="asc"> <mat-icon aria-hidden="false" fontIcon="arrow_drop_down" (click)="ordenarNoticia()"
+            style="cursor:pointer;"></mat-icon></span>
+        <span *ngIf="!asc"> <mat-icon aria-hidden="false" fontIcon="arrow_drop_up" (click)="ordenarNoticia()"
+            style="cursor:pointer;"></mat-icon></span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let noticia of listaNoticia">
+      <td class="align-middle text-center">
+        <span *ngIf="noticia.featured"> <mat-icon [ngStyle]="{'color':'#D4AC0D'}" aria-hidden="false" fontIcon="grade"
+            style="cursor:pointer;"></mat-icon></span>
+        <span *ngIf="!noticia.featured"> <mat-icon [ngStyle]="{'color':'#5D6D7E'}" aria-hidden="false" fontIcon="grade"
+            (click)="agregarFavorito(noticia)" style="cursor:pointer;"></mat-icon></span>
+      </td>
+      <td>{{noticia.title}}</td>
+      <td>{{noticia.summary}}</td>
+      <td><a href='{{noticia.url}}'>{{noticia.news_site}}</a></td>
+      <td>{{this.funciones.formatDate(noticia.published_at)}}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="row">
+  <nav aria-label="...">
+    <ul class="pagination ">
+      <li class="page-item" (click)="paginaAnterior()">
+        <a class="page-link"> <span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li [ngClass]="{'active' : i===(paginaIndex)}" class="page-item" *ngFor="let item of paginas; let i = index"
+        (click)="paginaSeleccionada(i)">
+        <a class="page-link">{{i+1}}</a>
+      </li>
+      <li class="page-item" (click)="paginaSiguiente()">
+        <a class="page-link"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+    </ul>
+  </nav>
+</div>
