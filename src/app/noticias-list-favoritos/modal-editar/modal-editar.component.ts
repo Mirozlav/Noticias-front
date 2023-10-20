@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NoticiaService } from 'src/app/services/noticia.service';
+import { Funciones } from 'src/app/shared/funciones/funciones';
 
 @Component({
   selector: 'app-modal-editar',
@@ -20,6 +21,7 @@ export class ModalEditarComponent implements OnInit {
   constructor(
     public bsModalRef: BsModalRef,
     private fb: FormBuilder,
+    private funciones: Funciones,
     private noticiaService: NoticiaService
   ) {
     this.noticiaEditarForm = this.fb.group({
@@ -44,12 +46,22 @@ export class ModalEditarComponent implements OnInit {
     this.item.news_site = this.noticiaEditarForm.value.resumen;
     this.noticiaService.modificarFavorito(this.item.id, this.item).subscribe(
       (data: any) => {
-        this.retornoValores.emit(true);
-        this.closeModal();
+        if (data != null) {
+          this.retornoValores.emit(true);
+          this.closeModal();
+          console.log(this.funciones.mostrarMensaje("insertar", ""));
+        } else {
+          this.retornoValores.emit(false);
+          this.closeModal();
+          console.error(this.funciones.mostrarMensaje("error", ""));
+          
+        }
+
       }
     );
 
   }
+
   closeModal() {
     this.bsModalRef.hide();
   }

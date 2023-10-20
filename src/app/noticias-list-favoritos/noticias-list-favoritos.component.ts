@@ -55,34 +55,15 @@ export class NoticiasListFavoritosComponent implements OnInit {
     );
   }
 
-  eliminarFavorito(id:any){
+  eliminarFavorito(id: any) {
     this.noticiaService.eliminarFavorito(id).subscribe(
-      (data: any) => { 
-        if(data!=null)    {
-          this.listarFavoritos();  
-          console.log(this.funciones.mostrarMensaje("insertar",""));
-        } else{
-          console.error(this.funciones.mostrarMensaje("error",""));
-        }
-     
+      (data: any) => {
+        this.listarFavoritos();
+        console.log(this.funciones.mostrarMensaje("eliminacion", ""));
       }
     );
   }
-
-  modificarFavorito(noticia:Noticias){
-    this.noticiaService.modificarFavorito(noticia.id,noticia).subscribe(
-      (data: any) => {       
-        if(data!=null)    {
-          this.listarFavoritos();  
-          console.log(this.funciones.mostrarMensaje("insertar",""));
-        } else{
-          console.error(this.funciones.mostrarMensaje("error",""));
-        }
-     
-      }
-    );
-  }
-
+  
   openModalEditar(item:Noticias) {
     const initialState = {
       item: item,
@@ -103,7 +84,7 @@ export class NoticiasListFavoritosComponent implements OnInit {
 
   buscarfavoritos(texto:string){     
     this.texto=texto;  
-    this.noticiaService.buscarFavorito(texto,this.pagina,this.tamanio,this.orden,this.asc).subscribe(
+    this.noticiaService.buscarFavorito(texto.toLocaleLowerCase(),this.pagina,this.tamanio,this.orden,this.asc).subscribe(
       (data: any) => { 
         if(data!=null)    {
           this.paginas=new Array(data['totalPages']);  
